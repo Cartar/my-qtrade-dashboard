@@ -1,23 +1,59 @@
 # my-qtrade-dashboard
+This repository holds my investment thesis, market notes, and financial dashboard, using [qtrade](https://pypi.org/project/qtrade/).
 
-This repo will house the code I use to construct a financial dashboard, using [qtrade](https://pypi.org/project/qtrade/).
+## Investment Thesis
+1. Buy and hold -> invest money that can be left for 10+ years.
+2. Assume markets are efficient & rational -> low cost market-wide index investing. Skew to small-cap value stocks.
+3. Use [Shiller PE ratio](https://www.multpl.com/shiller-pe) to determine if market is hot or cold. Adjust holdings/index's tracked accordingly. i.e., hot market should influence a larger bond holding. Cold market should influence a larger equities holding.
 
+This investment thesis is mostly shaped by the [Rational Reminder podcast](https://rationalreminder.ca/).
+
+## Human Capital
+Human capital is the expected return from one's career.
+
+For example, those who work in financial services receive above average financial capital, but are high risk of losing their jobs when a recession hits. As such, their human capital looks a lot like equities, and they should consider a skewed portfolio to bonds. Conversely, those who work in, say, energy or government funded childhood education have safer jobs. Their human capital looks a lot like a bond, so they should skew to equities in their portfolio. It might even make sense to leverage their credit worthiness to compensate for the bond-like nature of their human capital.
+
+Knowing ones human capital is critical to determining their investment strategy.
+
+## What are you investing for?
+Investments should be bucketed to clearly define the responsibility of that money. Common buckets include:
+* Rainy day (typically 6+ months of cash to pay for monthly expenses - stored in high interest savings accounts)
+* Housing
+* Education (yourself or dependancies)
+* Retirement
+* Vacations
+
+Knowing what your money will be used for, and when you'll need it should determine how it is invested. The longer the time horizon, and the more risk your investment strategy can take on.
+
+Your rainy day bucket should always be the first one maxed out. Do not touch this money until a rainy day arrives. Periodically update this bucket's size depending on your life situation.
+
+## Margin vs TFSA
+To tax benefits from a TFSA make it the preferred vehicle for assets you plan to adjust periodically. That is, if you're buying stocks that you aren't planning to hold forever, you should do so in a TFSA.
+
+Long term investments in a margin accounts (no tax sheltering), should rebalance themselves, without the need for you to sell your position and trigger captial gains. ETFs and mutual funds are the ideal mechanism for this.
+
+## My EFT Picks
+* XEI -> Cad Dividend
+* WSRD/WSRI -> wealth simple socially responsible ETFs 
+* VVL -> Global value 
+* ZRE -> Cad REIT 
+* ZLB -> Cad Low Volitility 
+* ZAG -> Diversified Cad Bonds (gov & corp) 
+* PZD -> Clean tech
+* ICLN/FAN -> Clean energy
+* VOE/VBR -> small/mid cap US value
+* VTI -> Total market
+
+## Monthly deposit:
+* XEI/WSRD/WSRI/VVL/ZLB/ZRE/ZAG + VOE/VBR/ICLN/FAN/PZD/VTI
+
+## How the dashboard works?
+...
 Should I use Jupyter labs or [Streamlit](https://www.streamlit.io/)?
 
-## content:
+## Dashboard Content to add:
 - Portolio dividend history
 - Current dividend yields 
 - Ticker tracker summary
 - Portfolio summary & comparison to target
 - Market sentiment analysis 
-
-## Trading strategy:
-Sunday run:
-- Compare ETF & market sentiment (what Sami showed me & the shiller index) to determine if the market is hot or cold
-    - Candlestick OHLC data points -> moving averages 
-- When the market is Hot, look to reduce positions that are bloated 
-- When the market is cold, look to open positions that are valuable
-
-## Margin vs TFSA
-- TFSA should have less activity, and less stocks -> set it and forget it (80/20)
-- Margin should be where more trading strategy takes place (80/20)
