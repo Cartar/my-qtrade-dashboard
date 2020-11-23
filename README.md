@@ -48,12 +48,22 @@ Long term investments in a margin accounts (no tax sheltering), should rebalance
 * XEI/WSRD/WSRI/VVL/ZLB/ZRE/ZAG + VOE/VBR/ICLN/FAN/PZD/VTI
 
 ## How the dashboard works?
-...
-Should I use Jupyter labs or [Streamlit](https://www.streamlit.io/)?
+Using [Stremlit](https://docs.streamlit.io/en/stable/getting_started.html), simply run:
+```bash
+streamlit run first_app.py
+```
 
-## Dashboard Content to add:
+## Dashboard content:
+WIP:
+1. Structure of dashboards (defined above, see `first_app.py`).
+2. Authoriztions & token refresh workflow.
+3. Caching.
+
+## Dashboard content to add:
 - Portolio dividend history
-- Current dividend yields 
-- Ticker tracker summary
-- Portfolio summary & comparison to target
-- Market sentiment analysis 
+- Current dividend yields
+- Cash contributions and returns (time windowed)
+- Stock pick checklist
+- Ticker tracker summary -> stocks of interest to monitor
+- Market sentiment analysis
+- Individual stock analysis (like: https://github.com/antonio-catalano/StockAnalysisApp)
