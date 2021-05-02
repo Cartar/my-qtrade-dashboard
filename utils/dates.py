@@ -61,10 +61,10 @@ def dates_of_interest(cadence, start, end):
         return quarterly_bins(start, end)
     elif cadence == 'monthly':
         return monthly_bins(start, end)
-    #elif cadence == 'daily': # TODO
-    #    return daily_bins(start, end)
+    elif cadence == 'daily':
+        return daily_bins(start, end)
     else:
-        raise ValueError("Cadence must be yearly, quarterly, or monthly") #, or daily
+        raise ValueError("Cadence must be yearly, quarterly, monthly, or daily")
 
 
 def yearly_bins(start, end):
@@ -116,5 +116,18 @@ def monthly_bins(start, end):
             "end": (nxt_mnth + datetime.timedelta(days=-1)).strftime("%Y-%m-%d"),
         }
         start_m = nxt_mnth.strftime("%Y-%m")
+
+    return dates
+
+
+def daily_bins(start, end):
+    dates = {}
+    
+    while start <= end:
+        dates[start.strftime("%Y-%m-%d")] = {
+            "start": start.strftime("%Y-%m-%d"),
+            "end": start.strftime("%Y-%m-%d"),
+        }
+        start += datetime.timedelta(days=1)
 
     return dates
