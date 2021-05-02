@@ -29,7 +29,7 @@ except:
         try:
             qtrade.refresh_access_token(from_yaml=True) # When Qtrade refreshes token, it kills the old credentials
             aapl, amzn = qtrade.ticker_information(['AAPL', 'AMZN'])
-            LOG.info("Authorized via access_token")
+            LOG.info("Authorized via refreshed access_token")
         except:
             LOG.error("Authorized was unsuccessful")
 
