@@ -1,0 +1,14 @@
+exclude: ^notebooks/
+repos:
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+        types: [file, python]
+        language_version: python3.7
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+      - id: trailing-whitespace
+        id: debug-statements
+        id: end-of-file-fixer

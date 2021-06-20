@@ -48,22 +48,32 @@ Long term investments in a margin accounts (no tax sheltering), should rebalance
 * XEI/WSRD/WSRI/VVL/ZLB/ZRE/ZAG + VOE/VBR/ICLN/FAN/PZD/VTI
 
 ## How the dashboard works?
+First, add you Qtrade authorization token as an environment variable named ``qtrade_token``:
+```sh
+export qtrade_token=<token_value>
+```
+
 Using [Stremlit](https://docs.streamlit.io/en/stable/getting_started.html), simply run:
 ```bash
 streamlit run first_app.py
 ```
 
-## Dashboard content:
-WIP:
-1. Structure of dashboards (defined above, see `first_app.py`).
-2. Authoriztions & token refresh workflow.
-3. Caching.
+## WORK IN PROGRESS
+Clean up functions and instructions for others to use :)
+i.e., requirements need fixing (streamlit==0.82.0 works with bokeh=2.2.0)
 
-## Dashboard content to add:
-- Portolio dividend history
+
+## Next up:
 - Current dividend yields
 - Cash contributions and returns (time windowed)
 - Stock pick checklist
 - Ticker tracker summary -> stocks of interest to monitor
 - Market sentiment analysis
 - Individual stock analysis (like: https://github.com/antonio-catalano/StockAnalysisApp)
+- Caching
+
+## Finished:
+1. Structure of dashboards (defined above, see `first_app.py`) -> simple for now
+2. Authoriztions & token refresh workflow.
+3. Portolio dividend history
+4. Trade activity & commissions
