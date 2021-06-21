@@ -64,13 +64,22 @@ i.e., requirements need fixing (streamlit==0.82.0 works with bokeh=2.2.0)
 
 
 ## Next up:
-- Current dividend yields
+- Dividend total for the displayed period
+- Available cash! (just cause it's a simple call)
+- Portfolio balance, built by summing activity!! -> cash & stock amount 
+    - What is my total deposit amount? It should equal my TFSA limit yeah?
+- Commission % as an average of the total balance over the period ((start + end) / 2)
+- Current dividend yields (as a percentage of account balance) -> using "get account positions" & ticker info
+    - Ohhh, build up a "total investment" vs "dividend payout" view :) 
+- Portfolio performance via account activity, buy & sell price, remaining units, and current value of those units.
+    - Maybe even build a comparison to 
 - Cash contributions and returns (time windowed)
 - Stock pick checklist
 - Ticker tracker summary -> stocks of interest to monitor
 - Market sentiment analysis
 - Individual stock analysis (like: https://github.com/antonio-catalano/StockAnalysisApp)
 - Caching
+- Better display of data
 
 ## Finished:
 1. Structure of dashboards (defined above, see `first_app.py`) -> simple for now
