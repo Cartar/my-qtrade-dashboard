@@ -112,6 +112,7 @@ cat = activity.groupby("type")
 option = st.sidebar.selectbox(
     "What cadence would you like to view data in?",
     ["daily", "monthly", "quarterly", "yearly"],
+    index=2,
 )
 
 "Dividend cadence:", option
