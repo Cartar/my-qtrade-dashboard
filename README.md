@@ -53,15 +53,21 @@ First, add you Qtrade authorization token as an environment variable named ``qtr
 export qtrade_token=<token_value>
 ```
 
+And add up to 3 accounts in a local file "account_id.yml"
+```yml
+RRSP: <account_value>
+TFSA: <account_value>
+margin: <account_value>
+```
+
 Using [Stremlit](https://docs.streamlit.io/en/stable/getting_started.html), simply run:
 ```bash
-streamlit run first_app.py
+streamlit run questrade_dashboard.py
 ```
 
 ## WORK IN PROGRESS
 Clean up functions and instructions for others to use :)
 i.e., requirements need fixing (streamlit==0.82.0 works with bokeh=2.2.0)
-
 
 ## Next up:
 - Dividend total for the displayed period
@@ -80,6 +86,7 @@ i.e., requirements need fixing (streamlit==0.82.0 works with bokeh=2.2.0)
 - Individual stock analysis (like: https://github.com/antonio-catalano/StockAnalysisApp)
 - Caching
 - Better display of data
+- Pushing to PyPI?
 
 ## Finished:
 1. Structure of dashboards (defined above, see `first_app.py`) -> simple for now

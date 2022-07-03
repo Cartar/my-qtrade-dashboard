@@ -7,7 +7,12 @@ import numpy as np
 import pandas as pd
 from qtrade import Questrade
 
-from utils import qtrade_date_range, dates_of_interest, account_activity
+from utils import (
+    qtrade_date_range,
+    dates_of_interest,
+    account_activity,
+    retrieve_balance_positions,
+)
 
 st.title("My Questrade Dashboard")
 
@@ -37,32 +42,115 @@ except:
         except:
             st.write(f"ERROR: was unable to authenticate user")
 
-# Select an account!
+
+# Select an account! Start by searching for an account_id.yml:
 """
 ## Account selection
-By default, we use the first account we can find. 
-You can override that below with either an index,
-or the account ID itself:
+By default, we look for an "account_id.yml file, with
+keys: TFSA, RRSP, and Margin. If none is found, we'll
+prompt you for either an index, or the account ID itself:
 """
-# Pull accounts
+import yaml
+import os.path
+
+file_name = "account_id.yml"
+
 account_ids = qtrade.get_account_id()
-input_index = st.text_input(
-    "Would you prefer to use a different account index (default is 0)?"
-)
-input_id = st.text_input(
-    "Would you prefer to set the account ID (default is 0th index returned by API)?"
-)
-if input_id:
-    acct_id = input_id
-elif input_index:
-    acct_id = account_ids[int(input_index)]
+
+if os.path.exists(file_name):
+    with open(file_name) as yaml_file:
+        account_id = yaml.load(yaml_file, Loader=yaml.FullLoader)
+    input_target = st.text_input(
+        "An account ID yaml was found! Which account would you like to use? (default is TFSA)"
+    )
+    if input_target:
+        target_account = input_target
+    else:
+        target_account = "TFSA"
+    acct_id = account_id[target_account]
+
 else:
-    acct_id = account_ids[0]
+    input_index = st.text_input(
+        "Would you prefer to use a different account index (default is 0)?"
+    )
+    input_id = st.text_input(
+        "Would you prefer to set the account ID (default is 0th index returned by API)?"
+    )
+    if input_id:
+        acct_id = input_id
+    elif input_index:
+        acct_id = account_ids[int(input_index)]
+    else:
+        acct_id = account_ids[0]
 
 
-# Retreive all data
+st.write("Account ID selected:")
+acct_id
+
+# Display current positions and balances:
 """
-## Retrieve data
+## Retrieve current positions and cash balance
+Note, all cash and suggested purchase amounts are in CAD.
+"""
+targets = {
+    "TFSA": {
+        "VVL.TO": 10,
+        "ZAG.TO": 15,
+        "VUN.TO": 12,
+        "XIC.TO": 6,
+        "XEF.TO": 6,
+        "VEE.TO": 1,
+        "Other": 30,
+    },
+    "Margin": {
+        "XEF.TO": 15,  # Developed international
+        "XIC.TO": 25,  # Canadian market
+        "VVL.TO": 25,  # Value
+        "VTI": 20,  # USD, US total market
+        "VEE.TO": 4,  # Emerging
+        "VUN.TO": 5,  # Same as VTI, but without USD
+        "Other": 5,  # Misc. ETFs not yet sold that I'm fine with...
+    },
+    "RRSP": {
+        "VTI": 30,  # USD
+        "XIC.TO": 30,
+        "XEF.TO": 16,
+        "VEE.TO": 6,
+        "VVL.TO": 18,
+        "Other": 0,
+    },
+}
+
+if not target_account:
+    ## Ask for target portfolio:
+    input_target = st.text_input(
+        "Would you prefer to use a different target account (default is TFSA)?"
+    )
+    if input_target:
+        target_account = input_target
+    else:
+        target_account = "TFSA"
+
+
+st.write("Displaying targets for:")
+target_account
+
+
+## Pull summary dataframe and combinedBalance:
+df_summary, combinedBalanceCAD = retrieve_balance_positions(
+    qtrade=qtrade, account_id=acct_id, targets=targets[target_account]
+)
+
+st.write("Total combined balance in CAD:")
+combinedBalanceCAD
+
+st.write("Portfolio summary and investment suggestions:")
+st.dataframe(df_summary)
+
+
+# Retreive all account activity data
+"""
+## Retrieve account activity
 By default, retrieves all year-to-date data.
 """
 end = datetime.date.today()
@@ -105,7 +193,7 @@ st.dataframe(activity.head(5))
 cat = activity.groupby("type")
 
 
-## Remaining content to migrate:
+## Display the dividend activity
 """
 # Dividend History
 """
