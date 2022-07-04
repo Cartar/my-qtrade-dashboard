@@ -19,11 +19,15 @@ def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFram
     # For simplicity, we use combined balances, which is an apporximation
     # that the user must deal with...
     combinedBalanceCAD = 0
+    combinedBalanceUSD = 0
 
     for balance in balances["combinedBalances"]:
         if balance["currency"] == "CAD":
             combinedBalanceCAD = balance["cash"]
-            break
+        elif balance["currency"] == "USD":
+            combinedBalanceUSD = balance["cash"]
+
+    exchangeUSDtoCAD = combinedBalanceCAD / combinedBalanceUSD
 
     # Now use targets to find their amounts:
     market_total = 0
@@ -39,18 +43,23 @@ def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFram
 
     # Organize data against targets
     for symbol, amount in summary.items():
+        if "." in symbol or symbol == "Other":
+            amt = amount[0]
+        else:
+            amt = amount[0] * exchangeUSDtoCAD
+
         summary[symbol] = [
-            amount[0],
-            amount[0] / market_total * 100,
+            amt,
+            amt / market_total * 100,
             targets[symbol],
-            targets[symbol] - amount[0] / market_total * 100,
+            targets[symbol] - amt / market_total * 100,
         ]
 
     # Create df with purchase amount suggestion
     df_summary = pd.DataFrame.from_dict(
         summary,
         orient="index",
-        columns=["Amount", "Current Pcnt", "Tagert Pcnt", "Pcnt Difference"],
+        columns=["Amount (CAD)", "Current Pcnt", "Tagert Pcnt", "Pcnt Difference"],
     )
     positive_pcnt_diff = df_summary[df_summary["Pcnt Difference"] > 0][
         "Pcnt Difference"

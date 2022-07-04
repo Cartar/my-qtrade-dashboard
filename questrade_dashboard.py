@@ -100,7 +100,7 @@ targets = {
         "XIC.TO": 6,
         "XEF.TO": 6,
         "VEE.TO": 1,
-        "Other": 30,
+        "Other": 50,
     },
     "Margin": {
         "XEF.TO": 15,  # Developed international
@@ -141,12 +141,16 @@ df_summary, combinedBalanceCAD = retrieve_balance_positions(
     qtrade=qtrade, account_id=acct_id, targets=targets[target_account]
 )
 
-st.write("Total combined balance in CAD:")
-combinedBalanceCAD
+st.write("Total combined balance in CAD: ${:,.2f}".format(combinedBalanceCAD))
 
 st.write("Portfolio summary and investment suggestions:")
 st.dataframe(df_summary)
 
+st.write(
+    "Portfolio value (positions plus cash): ${:,.2f}".format(
+        df_summary["Amount (CAD)"].sum() + combinedBalanceCAD
+    )
+)
 
 # Retreive all account activity data
 """
