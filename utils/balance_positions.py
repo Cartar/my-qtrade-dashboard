@@ -31,7 +31,7 @@ def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFram
 
     # Now use targets to find their amounts:
     market_total = 0
-    summary = {"Other": [0]}
+    summary = {key: [0] for key in targets.keys()}
 
     # Identify current market value of positions
     for position in positions:

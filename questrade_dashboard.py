@@ -14,6 +14,40 @@ from utils import (
     retrieve_balance_positions,
 )
 
+# Account target percentages:
+targets = {
+    "TFSA": {
+        "ZAG.TO": 18,  # Bonds
+        "XIC.TO": 8,  # Canadian market
+        "VTI": 0,  # US (USD)
+        "VUN.TO": 14,  # US (CAD)
+        "VVL.TO": 10,  # World wide value
+        "XEF.TO": 8,  # Developed international
+        "VEE.TO": 2,  # Emerging
+        "Other": 40,  # End goal is for this to eventually be ~25%
+    },
+    "Margin": {
+        "ZAG.TO": 0,
+        "XIC.TO": 34,
+        "VTI": 20,
+        "VUN.TO": 6,
+        "VVL.TO": 18,
+        "XEF.TO": 16,
+        "VEE.TO": 6,
+        "Other": 0,
+    },
+    "RRSP": {
+        "ZAG.TO": 10,
+        "XIC.TO": 27.5,
+        "VTI": 27.5,
+        "VUN.TO": 0,
+        "VVL.TO": 16,
+        "XEF.TO": 14,
+        "VEE.TO": 5,
+        "Other": 0,
+    },
+}
+
 st.title("My Questrade Dashboard")
 
 # Authenticate
@@ -92,34 +126,6 @@ acct_id
 ## Retrieve current positions and cash balance
 Note, all cash and suggested purchase amounts are in CAD.
 """
-targets = {
-    "TFSA": {
-        "VVL.TO": 10,
-        "ZAG.TO": 15,
-        "VUN.TO": 12,
-        "XIC.TO": 6,
-        "XEF.TO": 6,
-        "VEE.TO": 1,
-        "Other": 50,
-    },
-    "Margin": {
-        "XEF.TO": 15,  # Developed international
-        "XIC.TO": 25,  # Canadian market
-        "VVL.TO": 25,  # Value
-        "VTI": 20,  # USD, US total market
-        "VEE.TO": 4,  # Emerging
-        "VUN.TO": 5,  # Same as VTI, but without USD
-        "Other": 5,  # Misc. ETFs not yet sold that I'm fine with...
-    },
-    "RRSP": {
-        "VTI": 30,  # USD
-        "XIC.TO": 30,
-        "XEF.TO": 16,
-        "VEE.TO": 6,
-        "VVL.TO": 18,
-        "Other": 0,
-    },
-}
 
 if not target_account:
     ## Ask for target portfolio:
