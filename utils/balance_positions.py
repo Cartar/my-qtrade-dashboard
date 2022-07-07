@@ -35,11 +35,12 @@ def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFram
 
     # Identify current market value of positions
     for position in positions:
-        if position["symbol"] in targets.keys():
-            summary[position["symbol"]] = [position["currentMarketValue"]]
-        else:
-            summary["Other"][0] += position["currentMarketValue"]
-        market_total += position["currentMarketValue"]
+        if position["openQuantity"] > 0:
+            if position["symbol"] in targets.keys():
+                summary[position["symbol"]] = [position["currentMarketValue"]]
+            else:
+                summary["Other"][0] += position["currentMarketValue"]
+            market_total += position["currentMarketValue"]
 
     # Organize data against targets
     for symbol, amount in summary.items():

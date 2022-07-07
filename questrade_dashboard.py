@@ -29,8 +29,8 @@ targets = {
     "Margin": {
         "ZAG.TO": 0,
         "XIC.TO": 34,
-        "VTI": 20,
-        "VUN.TO": 6,
+        "VTI": 22,
+        "VUN.TO": 4,
         "VVL.TO": 18,
         "XEF.TO": 16,
         "VEE.TO": 6,
