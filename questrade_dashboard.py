@@ -141,13 +141,26 @@ if not target_account:
 st.write("Displaying targets for:")
 target_account
 
+## Ask user for percentage difference multiplier:
+"""
+## What %-diff multiplier would you like to skew investments by?
+The recommended purchase amount is equal to cash multiplied by weighted target percentage,
+where the weighted target is equal to the normalized target % plus %-diff multiplier
+times %-diff.
+"""
+pcnt_multiplier = st.slider("Percentage difference multiplier", 0, 10, 4)
+st.write("Percentage multiplier: ", pcnt_multiplier)
 
 ## Pull summary dataframe and combinedBalance:
 df_summary, combinedBalanceCAD = retrieve_balance_positions(
-    qtrade=qtrade, account_id=acct_id, targets=targets[target_account]
+    qtrade=qtrade,
+    account_id=acct_id,
+    targets=targets[target_account],
+    pcnt_multiplier=pcnt_multiplier,
 )
 
-st.write("Total combined balance in CAD: ${:,.2f}".format(combinedBalanceCAD))
+st.write("Total combined cash balance in CAD: ${:,.2f}".format(combinedBalanceCAD))
+
 
 st.write("Portfolio summary and investment suggestions:")
 st.dataframe(df_summary)

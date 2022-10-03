@@ -4,7 +4,9 @@ import pandas as pd
 from typing import Tuple
 
 
-def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFrame, int]:
+def retrieve_balance_positions(
+    qtrade, account_id, targets, pcnt_multiplier
+) -> Tuple[pd.DataFrame, int]:
     """
     Function to organize account balances and positions based on
     an incoming target portfolio percentage.
@@ -37,39 +39,46 @@ def retrieve_balance_positions(qtrade, account_id, targets) -> Tuple[pd.DataFram
     for position in positions:
         if position["openQuantity"] > 0:
             if position["symbol"] in targets.keys():
-                summary[position["symbol"]] = [position["currentMarketValue"]]
+                if "." not in position["symbol"]:
+                    summary[position["symbol"]] = [
+                        position["currentMarketValue"] * exchangeUSDtoCAD
+                    ]
+                else:
+                    summary[position["symbol"]] = [position["currentMarketValue"]]
+                market_total += summary[position["symbol"]][0]
             else:
                 summary["Other"][0] += position["currentMarketValue"]
-            market_total += position["currentMarketValue"]
+                market_total += position["currentMarketValue"]
 
     # Organize data against targets
     for symbol, amount in summary.items():
-        if "." in symbol or symbol == "Other":
-            amt = amount[0]
-        else:
-            amt = amount[0] * exchangeUSDtoCAD
-
         summary[symbol] = [
-            amt,
-            amt / market_total * 100,
+            amount[0],
+            amount[0] / market_total * 100,
             targets[symbol],
-            targets[symbol] - amt / market_total * 100,
+            targets[symbol] - amount[0] / market_total * 100,
+            targets[symbol]
+            + pcnt_multiplier * (targets[symbol] - amount[0] / market_total * 100),
         ]
 
     # Create df with purchase amount suggestion
     df_summary = pd.DataFrame.from_dict(
         summary,
         orient="index",
-        columns=["Amount (CAD)", "Current Pcnt", "Tagert Pcnt", "Pcnt Difference"],
+        columns=[
+            "Amount (CAD)",
+            "Current Pcnt",
+            "Tagert Pcnt",
+            "Pcnt Difference",
+            "Target + Pcnt Diff",
+        ],
     )
-    positive_pcnt_diff = df_summary[df_summary["Pcnt Difference"] > 0][
-        "Pcnt Difference"
+    sum_target = df_summary[df_summary["Target + Pcnt Diff"] > 0][
+        "Target + Pcnt Diff"
     ].sum()
-    df_summary["Pcnt diff weight"] = df_summary["Pcnt Difference"].apply(
-        lambda x: x / positive_pcnt_diff if x > 0 else 0
+    df_summary["Weight"] = df_summary["Target + Pcnt Diff"].apply(
+        lambda x: x / sum_target if x > 0 else 0
     )
-    df_summary["Purchase amount (CAD)"] = (
-        df_summary["Pcnt diff weight"] * combinedBalanceCAD
-    )
+    df_summary["Purchase amount (CAD)"] = df_summary["Weight"] * combinedBalanceCAD
 
     return df_summary, combinedBalanceCAD
