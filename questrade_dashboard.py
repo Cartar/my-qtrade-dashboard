@@ -18,13 +18,13 @@ from utils import (
 targets = {
     "TFSA": {
         "ZAG.TO": 18,  # Bonds
-        "XIC.TO": 8,  # Canadian market
+        "XIC.TO": 23,  # Canadian market
         "VTI": 0,  # US (USD)
-        "VUN.TO": 14,  # US (CAD)
-        "VVL.TO": 10,  # World wide value
-        "XEF.TO": 8,  # Developed international
-        "VEE.TO": 2,  # Emerging
-        "Other": 40,  # End goal is for this to eventually be ~25%
+        "VUN.TO": 18,  # US (CAD)
+        "VVL.TO": 16,  # World wide value
+        "XEF.TO": 11.5,  # Developed international
+        "VEE.TO": 3.5,  # Emerging
+        "Other": 10,  # End goal is for this to eventually be ~10%
     },
     "Margin": {
         "ZAG.TO": 0,
