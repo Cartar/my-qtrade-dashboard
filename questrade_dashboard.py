@@ -17,7 +17,8 @@ from utils import (
 # Account target percentages:
 targets = {
     "TFSA": {
-        "ZAG.TO": 18,  # Bonds
+        "ZAG.TO": 15,  # Bonds
+        "CASH.TO": 3,  # Cash
         "XIC.TO": 23,  # Canadian market
         "VTI": 0,  # US (USD)
         "VUN.TO": 18,  # US (CAD)
@@ -28,6 +29,7 @@ targets = {
     },
     "Margin": {
         "ZAG.TO": 0,
+        "CASH.TO": 20,
         "XIC.TO": 34,
         "VTI": 22,
         "VUN.TO": 4,
@@ -37,13 +39,25 @@ targets = {
         "Other": 0,
     },
     "RRSP": {
-        "ZAG.TO": 10,
+        "ZAG.TO": 5,
+        "CASH.TO": 5,
         "XIC.TO": 27.5,
         "VTI": 27.5,
         "VUN.TO": 0,
         "VVL.TO": 16,
         "XEF.TO": 14,
         "VEE.TO": 5,
+        "Other": 0,
+    },
+    "FHSA": {
+        "ZAG.TO": 10,
+        "CASH.TO": 35,
+        "XIC.TO": 17,
+        "VTI": 0,
+        "VUN.TO": 17,
+        "VVL.TO": 8.5,
+        "XEF.TO": 8.5,
+        "VEE.TO": 4,
         "Other": 0,
     },
 }
@@ -81,7 +95,7 @@ except:
 """
 ## Account selection
 By default, we look for an "account_id.yml file, with
-keys: TFSA, RRSP, and Margin. If none is found, we'll
+keys: TFSA, RRSP, FHSA, and Margin. If none is found, we'll
 prompt you for either an index, or the account ID itself:
 """
 import yaml

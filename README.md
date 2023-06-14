@@ -62,6 +62,7 @@ margin: <account_value>
 
 Using [Stremlit](https://docs.streamlit.io/en/stable/getting_started.html), simply run:
 ```bash
+conda activate qtrade
 streamlit run questrade_dashboard.py
 ```
 
